@@ -7,6 +7,8 @@ import com.springboot.main_pkg.dto.EmployeeDTO;
 import com.springboot.main_pkg.repo.EmployeeRepo;
 import com.springboot.main_pkg.repo.OfficeRepo;
 
+import jakarta.transaction.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Service
+
 public class EmployeeService {
 
     @Autowired
@@ -105,6 +108,40 @@ public class EmployeeService {
            employeeRepository.save(emp);
            return emp;
        }
-
+   
+    public Employees updateEmployeeReportingManager(Integer employeeNumber,Integer newemployeenumber) {
+    	 Employees employee1=employeeRepository.findByEmployeeNumber(employeeNumber);
+    	 Optional<Employees> manager=employeeRepository.findById(newemployeenumber);
+    	     if(employee1!=null) {
+    	    	 if(manager!=null) {
+    	    		 Employees manager1=manager.get();
+    	    		 employee1.setManager(manager1);
+    	    		 employeeRepository.save(employee1);
+    	    	 }
+    	    	 else {
+    	    		 throw new RuntimeException("Manager not found for ID: " +newemployeenumber);
+    	    	 }
+    	    	
+    	     }else {
+    	    	 throw new RuntimeException("Employee not found for ID: " +employeeNumber);
+    	     }
+    	     return employee1;
+    }
+    
+    public Employees updateRole(Integer employeeNumber,String role) {
+    	Employees emp=employeeRepository.findByEmployeeNumber(employeeNumber);
+    	if(emp!=null) {
+    		emp.setJobTitle(role);
+    		employeeRepository.save(emp);
+    	}else {
+    		throw new RuntimeException("Employee not found for Id:"+employeeNumber);
+    	}
+    	return emp;
+    }
+    @Transactional
+    public void updateAllRoles(String jobtitle) {
+        int updatedRows = employeeRepository.updateAllEmployeesRoles(jobtitle);
+        System.out.println(updatedRows + " employees updated with new role: " + jobtitle);
+    }
 
 } 
