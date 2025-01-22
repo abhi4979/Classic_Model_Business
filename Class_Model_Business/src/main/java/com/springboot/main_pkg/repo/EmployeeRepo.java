@@ -23,5 +23,6 @@ public interface EmployeeRepo extends JpaRepository<Employees, Integer>{
     @Query(value = "UPDATE employees SET job_title = :jobtitle", nativeQuery = true)
     int updateAllEmployeesRoles(@Param("jobtitle") String jobtitle);
 
+    public void deleteByEmployeeNumber(int employeeNumber);
     
 }

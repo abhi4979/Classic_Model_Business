@@ -9,5 +9,5 @@ import com.springboot.main_pkg.Entity.Offices;
 
 @RepositoryRestResource
 public interface OfficeRepo extends JpaRepository<Offices, String>{
-     
+    public Offices findByOfficeCode(String officeCode);
 }

@@ -47,7 +47,7 @@ public class EmployeeService {
                 Employees manager = managerOptional.get();
                 employee.setManager(manager);
             } else {
-                throw new RuntimeException("Manager not found for ID: " + employeeDTO.getReportsTo());
+                throw new IllegalArgumentException("Manager not found for ID: " + employeeDTO.getReportsTo());
             }
         } else {
             employee.setManager(null); 
@@ -79,7 +79,7 @@ public class EmployeeService {
     public Employees updateEmployee(Integer EmployeeNumber,EmployeeDTO empdto) {
     	   Employees emp= employeeRepository.findByEmployeeNumber(EmployeeNumber);
     	   if(emp==null) {
-    		   throw new RuntimeException("Please provide correct EmployeeNumber");
+    		   throw new IllegalArgumentException("Please provide correct EmployeeNumber");
     	   }
     	   emp.setFirstName(empdto.getFirstName());
            emp.setLastName(empdto.getLastName());
@@ -99,7 +99,7 @@ public class EmployeeService {
                    Employees manager = managerOptional.get();
                    emp.setManager(manager);
                } else {
-                   throw new RuntimeException("Manager not found for ID: " + empdto.getReportsTo());
+                   throw new IllegalArgumentException("Manager not found for ID: " + empdto.getReportsTo());
                }
            } else {
                emp.setManager(null); 
@@ -119,11 +119,11 @@ public class EmployeeService {
     	    		 employeeRepository.save(employee1);
     	    	 }
     	    	 else {
-    	    		 throw new RuntimeException("Manager not found for ID: " +newemployeenumber);
+    	    		 throw new IllegalArgumentException("Manager not found for ID: " +newemployeenumber);
     	    	 }
     	    	
     	     }else {
-    	    	 throw new RuntimeException("Employee not found for ID: " +employeeNumber);
+    	    	 throw new IllegalArgumentException("Employee not found for ID: " +employeeNumber);
     	     }
     	     return employee1;
     }
@@ -134,14 +134,33 @@ public class EmployeeService {
     		emp.setJobTitle(role);
     		employeeRepository.save(emp);
     	}else {
-    		throw new RuntimeException("Employee not found for Id:"+employeeNumber);
+    		throw new IllegalArgumentException("Employee not found for Id:"+employeeNumber);
     	}
     	return emp;
     }
     @Transactional
     public void updateAllRoles(String jobtitle) {
-        int updatedRows = employeeRepository.updateAllEmployeesRoles(jobtitle);
-        System.out.println(updatedRows + " employees updated with new role: " + jobtitle);
+        employeeRepository.updateAllEmployeesRoles(jobtitle);
     }
-
+    public Employees updateOfficeDetailsOfEmployee(Integer employeenumber,String officecode) {
+    	Employees emp= employeeRepository.findByEmployeeNumber(employeenumber);
+    	   Offices office= officeRepository.findByOfficeCode(officecode);
+    	  if(emp !=null && office !=null) {
+    		  emp.setOffice(office);
+    		  employeeRepository.save(emp);
+    	  }else {
+    		  throw new IllegalArgumentException("Check The Employee Number or OfficeCode correctly");
+    	  }
+    	  return emp;
+    }
+    public Employees deleteEmployee(Integer employeeNumber) {
+    	Employees emp=employeeRepository.findByEmployeeNumber(employeeNumber);
+    	if(emp!=null) {
+    	   employeeRepository.deleteByEmployeeNumber(employeeNumber);
+    	}else {
+    		throw new IllegalArgumentException("Employee Not Found "+employeeNumber);
+    	}
+    	return emp;
+    }
+  
 } 

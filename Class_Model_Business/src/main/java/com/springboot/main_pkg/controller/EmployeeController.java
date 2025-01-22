@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,8 @@ import com.springboot.main_pkg.Entity.Employees;
 import com.springboot.main_pkg.Service.EmployeeService;
 import com.springboot.main_pkg.dto.EmployeeDTO;
 import com.springboot.main_pkg.repo.EmployeeRepo;
+
+import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/employee")
@@ -96,6 +99,25 @@ public class EmployeeController {
 	      mp.put("message","Employee Role Updated Successfully");
 	      return ResponseEntity.ok(mp);
    }
+   
+   @PutMapping("/update/{employeeNumber}/map to office/{officecode}")
+   public ResponseEntity<Map<String,String>> updateOfficeDetails(@PathVariable Integer employeeNumber,@PathVariable String officecode){
+	       emp_service.updateOfficeDetailsOfEmployee(employeeNumber, officecode);
+	       Map<String,String> map=new HashMap<>();
+	       map.put("timestamp", LocalTime.now().toString());
+	       map.put("message","Employee Office details updated Successfully");
+	       		return ResponseEntity.ok(map);
+   }
+   @Transactional
+   @DeleteMapping("/delete/{employeeNumber}")
+   public ResponseEntity<Map<String,String>> deleteEmployee(@PathVariable Integer employeeNumber){
+	   emp_service.deleteEmployee(employeeNumber);
+	   Map<String,String> map=new HashMap<>();
+	   map.put("timestamp",LocalTime.now().toString());
+	   map.put("message", "Employee Details Deleted Successfully");
+	   return ResponseEntity.ok(map);
+   }
+   
    
    
    
