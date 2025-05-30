@@ -1,9 +1,11 @@
 package com.springboot.main_pkg.Service;
 
 
+import com.springboot.main_pkg.Entity.Customers;
 import com.springboot.main_pkg.Entity.Employees;
 import com.springboot.main_pkg.Entity.Offices;
 import com.springboot.main_pkg.dto.EmployeeDTO;
+import com.springboot.main_pkg.repo.CustomerRepo;
 import com.springboot.main_pkg.repo.EmployeeRepo;
 import com.springboot.main_pkg.repo.OfficeRepo;
 
@@ -22,8 +24,8 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepo employeeRepository;
-
-    
+     @Autowired
+    private CustomerRepo customerrepo;
     @Autowired
     private OfficeRepo officeRepository;
 
@@ -153,14 +155,13 @@ public class EmployeeService {
     	  }
     	  return emp;
     }
-    public Employees deleteEmployee(Integer employeeNumber) {
-    	Employees emp=employeeRepository.findByEmployeeNumber(employeeNumber);
-    	if(emp!=null) {
-    	   employeeRepository.deleteByEmployeeNumber(employeeNumber);
-    	}else {
-    		throw new IllegalArgumentException("Employee Not Found "+employeeNumber);
-    	}
-    	return emp;
+    @Transactional
+    public void deleteEmployee(Integer employeeNumber) {
+        customerrepo.detachSalesRepFromCustomers(employeeNumber);           // Step 1: detach from customers
+        employeeRepository.detachManagerFromEmployees(employeeNumber);            // Step 2: detach from employees             
+        employeeRepository.deleteById(employeeNumber);
     }
+    
+ 
   
 } 

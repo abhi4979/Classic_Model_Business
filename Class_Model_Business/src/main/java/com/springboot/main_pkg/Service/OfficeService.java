@@ -1,5 +1,7 @@
 package com.springboot.main_pkg.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +17,7 @@ public class OfficeService {
    @Autowired
    private OfficeRepo officeRepo;
    
-   public Offices addOffice(@RequestBody Offices office) {
+   public Offices addOffice(@RequestBody OfficeDTO office) {
 	   Offices offices=new Offices();
 	   offices.setOfficeCode(office.getOfficeCode());
 	   offices.setCity(office.getCity());
@@ -30,6 +32,9 @@ public class OfficeService {
 	   officeRepo.save(offices);
 	   return offices;
    }
+   public List<Offices> getAllOffices(){
+	   return officeRepo.findAll();
+	   }
    
    public Offices getOffice(String officecode) {
 	  return officeRepo.findByOfficeCode(officecode); 

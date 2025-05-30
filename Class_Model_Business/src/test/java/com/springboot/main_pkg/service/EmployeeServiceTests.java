@@ -25,8 +25,8 @@ class EmployeeServiceTests {
 	@Autowired
 	private EmployeeRepo employeeRepository;
 	
-	@Disabled
-	//@Test
+	//@Disabled
+	@Test
 	@ParameterizedTest
 	@ValueSource(ints={
 		102,3,5,3

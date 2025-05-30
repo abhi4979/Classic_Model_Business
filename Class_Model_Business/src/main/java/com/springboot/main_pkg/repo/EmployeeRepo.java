@@ -25,4 +25,9 @@ public interface EmployeeRepo extends JpaRepository<Employees, Integer>{
 
     public void deleteByEmployeeNumber(int employeeNumber);
     
+    
+    
+    @Modifying
+    @Query("UPDATE Employees e SET e.manager = null WHERE e.manager.employeeNumber = :empNo")
+    void detachManagerFromEmployees(@Param("empNo") Integer empNo);
 }

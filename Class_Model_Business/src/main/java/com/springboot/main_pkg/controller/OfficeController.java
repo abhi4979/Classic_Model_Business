@@ -1,5 +1,7 @@
 package com.springboot.main_pkg.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,17 +18,30 @@ import com.springboot.main_pkg.Entity.Offices;
 import com.springboot.main_pkg.Service.OfficeService;
 import com.springboot.main_pkg.dto.OfficeDTO;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 
 
 @RestController
+@RequestMapping("/api/v1/offices/")
+@Tag(name="Office API")
 public class OfficeController {
 	@Autowired
      OfficeService service;
 	
 	@PostMapping("/office/add")
-	public ResponseEntity<Offices> addOffice(@RequestBody Offices office){
+	public ResponseEntity<Offices> addOffice(@RequestBody OfficeDTO office){
 		Offices off=service.addOffice(office);
 		return new ResponseEntity<Offices>(off,HttpStatus.CREATED );
+	}
+	@GetMapping("/get")
+	public ResponseEntity<List<Offices>> getAllOffice(){
+		List<Offices> off=service.getAllOffices();
+		if(off!=null) {
+			return ResponseEntity.ok(off);
+		}else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 	@GetMapping("/office/{officecode}")
 	public ResponseEntity<Offices> getOfficeDetails(@PathVariable String officecode){

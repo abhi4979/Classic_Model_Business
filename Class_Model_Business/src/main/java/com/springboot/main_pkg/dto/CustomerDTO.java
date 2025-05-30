@@ -4,10 +4,15 @@ import lombok.Data;
 
 
 import java.math.BigDecimal;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
 public class CustomerDTO {
+	@NotEmpty
+	@Schema(description = "The Customer's name")
     private String customerName;
     private String contactLastName;
     private String contactFirstName;

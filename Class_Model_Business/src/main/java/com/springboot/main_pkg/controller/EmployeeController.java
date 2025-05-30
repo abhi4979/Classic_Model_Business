@@ -23,10 +23,12 @@ import com.springboot.main_pkg.Service.EmployeeService;
 import com.springboot.main_pkg.dto.EmployeeDTO;
 import com.springboot.main_pkg.repo.EmployeeRepo;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/api/v1/employees")
+@Tag(name="Employee API")
 public class EmployeeController {
    @Autowired
    EmployeeService emp_service;
@@ -73,7 +75,7 @@ public class EmployeeController {
 	  }
    }
    
-   @PutMapping("/{employeeNumber}/reports to/{newemployeenumber}")
+   @PutMapping("/update/{employeeNumber}/reportsto/{newemployeenumber}")
    public ResponseEntity<Employees> updateEmployeeReportingManager(@PathVariable Integer employeeNumber,@PathVariable Integer newemployeenumber){
 	      Employees emp=emp_service.updateEmployeeReportingManager(employeeNumber, newemployeenumber);
 	      if(emp!=null) {
@@ -91,9 +93,9 @@ public class EmployeeController {
 	    	  return ResponseEntity.notFound().build();
 	      }
 }
-   @PutMapping("/update/role/{role}")
-   public ResponseEntity<Map<String,String>> updateRole(@PathVariable String role){
-	        emp_service.updateAllRoles(role);
+   @PutMapping("/update/{employeeNumber}/role/{role}")
+   public ResponseEntity<Map<String,String>> updateRole(@PathVariable Integer employeeNumber,@PathVariable String role){
+	        emp_service.updateRole(employeeNumber,role);
 	      Map<String,String> mp=new HashMap<>();
 	      mp.put("timestamp", LocalTime.now().toString());
 	      mp.put("message","Employee Role Updated Successfully");
@@ -117,6 +119,8 @@ public class EmployeeController {
 	   map.put("message", "Employee Details Deleted Successfully");
 	   return ResponseEntity.ok(map);
    }
+   
+   
    
    
    

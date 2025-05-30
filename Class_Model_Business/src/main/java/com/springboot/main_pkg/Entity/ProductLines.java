@@ -25,7 +25,6 @@ public class ProductLines {
 	private String textDescription;
 	@Column(name="htmldescription",columnDefinition = "TEXT")
 	private String htmlDescription;
-	@Lob
-    @Column(name = "image", columnDefinition = "BYTEA")
-    private byte[] image;
+	@Column(name = "image")
+	private String image;  // Store the URL or file path as a string
 }

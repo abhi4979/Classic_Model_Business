@@ -54,7 +54,9 @@ public class CustomerService {
     public List<Customers> getAll(){
     	 return customerRepo.findAll();
     }
-    
+    public List<Customers> getCustomerCity(String city){
+     return customerRepo.findByCity(city);
+    }
     public List<Customers> getLessCreditLimit(BigDecimal creditLimit){
     	List<Customers> cusm=customerRepo.findAll();
     	return cusm.stream().filter(x->x.getCreditLimit().compareTo(creditLimit)<0).collect(Collectors.toList());
@@ -141,6 +143,7 @@ public class CustomerService {
     	 }
 	    return customerinfo;
 }
+   
     
     
 }
