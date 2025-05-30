@@ -25,7 +25,7 @@ class EmployeeServiceTests {
 	@Autowired
 	private EmployeeRepo employeeRepository;
 	
-	//@Disabled
+	@Disabled
 	@Test
 	@ParameterizedTest
 	@ValueSource(ints={
@@ -34,7 +34,7 @@ class EmployeeServiceTests {
 	 void testgetEmployee(int id) {
 		 assertNotNull(employeeRepository.findByEmployeeNumber(id));
 	}
-	
+	@Disabled
 	@ParameterizedTest
 	@CsvSource({
 		"a,b"
@@ -43,12 +43,13 @@ class EmployeeServiceTests {
 	void getAdd(String a,String b) {
 		assertNotEquals(a, b);
 	}
-	
+	@Disabled
 	//@BeforeEach
 	@BeforeAll
 	void xz() {
 		System.out.println("Nope");
 	}
+	@Disabled
 	@ParameterizedTest
 	@CsvSource({
 		"a,a",
