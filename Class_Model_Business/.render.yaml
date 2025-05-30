@@ -1,0 +1,7 @@
+services:
+-type: web
+name: classic-model-business
+env: java
+buildCommand: cd Class_Model_Business && ./mvnw clean install
+startCommand: cd Class_Model_Business && java -jar target/Class_Model_Business-0.0.1-SNAPSHOT.jar
+autoDeploy: true
