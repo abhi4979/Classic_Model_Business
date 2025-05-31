@@ -26,7 +26,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
-@CrossOrigin(origins="https://classicalmodelbusiness.netlify.app/")
+@CrossOrigin(origins="https://classicalmodelbusiness.netlify.app")
 @RestController
 @RequestMapping("/api/v1/customer")
 @Tag(name="Customer-API",description = "Update and save customer")

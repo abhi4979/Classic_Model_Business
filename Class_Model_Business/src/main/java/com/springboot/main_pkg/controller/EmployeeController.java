@@ -27,7 +27,7 @@ import com.springboot.main_pkg.repo.EmployeeRepo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 
-@CrossOrigin(origins="https://classicalmodelbusiness.netlify.app/")
+@CrossOrigin(origins="https://classicalmodelbusiness.netlify.app")
 @RestController
 @RequestMapping("/api/v1/employees")
 @Tag(name="Employee API")

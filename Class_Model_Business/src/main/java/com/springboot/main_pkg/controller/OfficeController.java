@@ -22,7 +22,7 @@ import com.springboot.main_pkg.dto.OfficeDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 
-@CrossOrigin(origins="https://classicalmodelbusiness.netlify.app/")
+@CrossOrigin(origins="https://classicalmodelbusiness.netlify.app")
 @RestController
 @RequestMapping("/api/v1/offices/")
 @Tag(name="Office API")

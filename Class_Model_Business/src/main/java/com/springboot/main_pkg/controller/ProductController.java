@@ -15,7 +15,7 @@ import com.springboot.main_pkg.dto.ProductDTO;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@CrossOrigin(origins="https://classicalmodelbusiness.netlify.app/")
+@CrossOrigin(origins="https://classicalmodelbusiness.netlify.app")
 @RestController
 @RequestMapping("/api/v1/product")
 @Tag(name="Product API")
