@@ -1,20 +1,14 @@
-# Use OpenJDK 17 slim image as base
+# Use OpenJDK 17 as base image
 FROM openjdk:17-jdk-slim
 
-# Set working directory inside the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy everything into the container
-COPY . .
+# Copy the jar file into the container
+COPY target/Class_Model_Business-0.0.1-SNAPSHOT.jar app.jar
 
-# Make Maven wrapper executable
-RUN chmod +x ./mvnw
+# Expose the port Spring Boot uses
+EXPOSE 8099
 
-# Build the application
-RUN ./mvnw clean install -DskipTests
-
-# Expose the default Spring Boot port
-EXPOSE 8080
-
-# Run the Spring Boot jar
-CMD ["java", "-jar", "Class_Model_Business/target/Class_Model_Business-0.0.1-SNAPSHOT.jar"]
+# Run the jar file
+ENTRYPOINT ["java", "-jar", "app.jar"]
